@@ -66,7 +66,7 @@ GitHubBadge.Launcher = new function() {
         break;
       }
     }
-  }
+  };
 
   this.loadedLibraries = function() {
     if(typeof jQuery == 'undefined' || typeof jQuery.template == 'undefined')
@@ -83,7 +83,7 @@ GitHubBadge.Launcher = new function() {
     }
 
     GitHubBadge.buildUserBadge(GITHUB_USERNAME);
-  }
+  };
 };
 
 GitHubBadge.Launcher.requestContent = function( url, callback ) {
@@ -94,6 +94,6 @@ GitHubBadge.Launcher.requestContent = function( url, callback ) {
     onLoadStr = (typeof callback == "undefined") ? "" : 'onload="' + callback + '()"';
     document.write('<script ' + onLoadStr + 'type="text/javascript" src="'+url+'"></script>');
   }
-}
+};
 
 GitHubBadge.Launcher.init();
