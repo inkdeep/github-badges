@@ -1,3 +1,16 @@
+/*  GitHub Badge, version 1.2.3
+ *  (c) 2008 Dr Nic Williams
+ *
+ *  GitHub Badge is freely distributable under
+ *  the terms of an MIT-style license.
+ *  For details, see the web site: http://github.com/drnic/github-badges/tree/master
+ *
+ *--------------------------------------------------------------------------*/
+
+var GithubBadge = {
+  Version: '1.2.3'
+};
+
 var GitHubBadge = GitHubBadge || {};
 
 GitHubBadge.Launcher = new function() {
@@ -8,21 +21,19 @@ GitHubBadge.Launcher = new function() {
         .attr('href', url)
         .attr('id', style_id)
       );
-			if (style_id  == 'flashy_black_badge') { squeezeIn };
     } else {
       document.write('<link rel="stylesheet" href="'+url+'" type="text/css"' + id_attr + '></link>');
-			if (style_id  == 'flashy_black_badge') { squeezeIn };
     }
   }
 
-	function squeezeIn() {
-		document.write('<link rel="stylesheet" href="'+url+'" type="text/css"' + id_attr + '></link>'+
-			'<style type="text/css" media="screen">'+
-			'	 #github-badge {width:200px; margin:0;padding:0 0 12px 0;color:white;background:url(' + this.path + 'ext/images/github-badge-bottom.png) bottom left no-repeat;font: 11px "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;}'+
-			'  #github-badge div.header {text-align:right;padding:56px 0 0 0;background:url(' + this.path + 'ext/images/github-badge-top.png) 0 0 no-repeat;}font: 12px "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;'+
-			'</style>');
+	 function addedStyles(url) {
+		var addedStyles = '<style type="text/css" media="screen">'+
+			'#github-badge .footer {background:url(' + url + 'ext/images/github-badge-bottom.png) bottom left no-repeat;}'+
+			'#github-badge 	{background:url(' + url + 'ext/images/github-badge-top.png) 0 0 no-repeat;}'+
+			'</style>';
+			return addedStyles;
 	}
-  
+
   function basePath() {
     var scripts = document.getElementsByTagName("script");
     for (var i=0; i < scripts.length; i++) {
@@ -34,7 +45,7 @@ GitHubBadge.Launcher = new function() {
 
   this.init = function() {
     var libraries = [
-        [typeof jQuery, "ext/jquery"], 
+        [typeof jQuery, "ext/jquery"],
         [typeof jQuery != "undefined" && typeof jQuery.template, "ext/jquery.template"],
         [false, "github-badge"]
       ];
@@ -60,16 +71,17 @@ GitHubBadge.Launcher = new function() {
   this.loadedLibraries = function() {
     if(typeof jQuery == 'undefined' || typeof jQuery.template == 'undefined')
       throw("GitHub Badge requires jQuery and jQuery.template");
-    
+
     var is_black = ("GITHUB_THEME" in window && GITHUB_THEME) || 'white';
-		if (is_black == 'flashy_black') {    
+		if (is_black == 'flashy_black') {
 			requestStylesheet(this.path + 'ext/stylesheets/flashy_black_badge.css', 'flashy_black_badge');
+			document.write(addedStyles(this.path));
     }else if (is_black == 'black' || jQuery.color.almostBlack(jQuery('#github-badge').parent().css('background-color'))) {
       requestStylesheet(this.path + 'ext/stylesheets/black_badge.css', 'black_badge');
 		} else {
       requestStylesheet(this.path + 'ext/stylesheets/badge.css', 'badge');
     }
-    
+
     GitHubBadge.buildUserBadge(GITHUB_USERNAME);
   }
 };
@@ -84,3 +96,4 @@ GitHubBadge.Launcher.requestContent = function( url, callback ) {
   }
 }
 
+GitHubBadge.Launcher.init();
