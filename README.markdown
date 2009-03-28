@@ -1,3 +1,8 @@
+Inkdeep theme:
+<div><img src="http://mechanis.ms/github_badges.png" alt="github badge: inkdeep remix" /></div>
+
+
+
 Github Badges
 -------------
 
